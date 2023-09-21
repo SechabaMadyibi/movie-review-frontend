@@ -11,6 +11,7 @@ import Movie from "./components/movie"
 import Login from "./components/login"
 
 
+
 function App() {
   const [user, setUser] = React.useState(null)
   async function login(user = null) {// default user to null
