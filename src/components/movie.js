@@ -9,6 +9,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Media from 'react-bootstrap/Media';
+import moment from 'moment'
 
 const Movie = props => {
     //We have a movie state variable to hold the specific movie we are currently showing in the Movie
@@ -68,8 +69,12 @@ which we will implement later. Next, let’s implement the listing of reviews   
                             return (
                                 <Media key={index}>
                                     <Media.Body>
-                                        <h5>{review.name + " reviewed on " + review.date}</h5>
+                                        <h5>{review.name + " reviewed on "}
+                                        {moment(review.date).format("Do MMMM YYYY")}</h5>
                                         <p>{review.review}</p>
+  {/* A user can only delete reviews they have posted. They can’t delete/edit other’s reviews. Thus, we first
+check to see if a user is logged in (props.user is true). And only if the logged in user id is the same as
+the review user id */}
                                         {props.user && props.user.id === review.user_id &&
                                             <Row>
                                                 <Col><Link to={{
