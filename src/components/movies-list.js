@@ -64,6 +64,7 @@ const MoviesList = props => {
     const onChangeSearchRating = e => {
         const searchRating = e.target.value
         setSearchRating(searchRating);
+        //console.log(searchRating)
     }
     // The find function is supported by the findByTitle and findByRating methods. find simply provides the search
     // query value entered by the user and by which field to search (i.e. title or rated) to MovieDataService.find
@@ -95,6 +96,7 @@ const MoviesList = props => {
         }
         else{
         find(searchRating, "rated")
+        
         }
     }
 

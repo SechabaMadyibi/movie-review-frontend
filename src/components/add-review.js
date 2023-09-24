@@ -1,8 +1,11 @@
 import React from 'react'
-function AddReview() {
+function AddReview(props) {
+    
  return (
  <div className="App">
  Add Review
+
+{console.log(props)}
  </div>
  );
 }

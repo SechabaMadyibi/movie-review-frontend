@@ -39,7 +39,7 @@ const Movie = props => {
     useEffect(() => {
         getMovie(props.match.params.id)
     }, [props.match.params.id])
-
+console.log( props.name)
     return (
         <div>
             <Container>
