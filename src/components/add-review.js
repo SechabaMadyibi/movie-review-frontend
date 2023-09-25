@@ -5,7 +5,6 @@ function AddReview(props) {
  <div className="App">
  Add Review
 
-{console.log(props)}
  </div>
  );
 }

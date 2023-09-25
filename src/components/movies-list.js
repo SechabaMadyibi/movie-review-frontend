@@ -86,7 +86,7 @@ const MoviesList = props => {
         const findByTitle = () => {
         find(searchTitle, "title")
         }
-
+console.log(props)
 // findByRating is called by the ‘Search by rating’s search button. It provides the rating value to be searched
 // to find() and tells it to search by ‘rated’.
 

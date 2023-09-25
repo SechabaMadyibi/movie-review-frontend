@@ -20,8 +20,9 @@ const Login = props => {
     }
     const login = () => {
         props.login({ name: name, id: id })
-        props.history.push('/')
+      props.history.push('/')
     }
+   
     return (
         <div>
             <Form>

@@ -39,7 +39,7 @@ const Movie = props => {
     useEffect(() => {
         getMovie(props.match.params.id)
     }, [props.match.params.id])
-console.log( props.name)
+console.log(props)
     return (
         <div>
             <Container>
@@ -54,8 +54,8 @@ console.log( props.name)
                                 <Card.Text>
                                     {movie.plot}
                                 </Card.Text>
-                                {/* In the Card component, if the user is logged in, i.e. props.user is true, we include a link to ‘Add Review’
-which we will implement later. Next, let’s implement the listing of reviews                               */}
+  {/* In the Card component, if the user is logged in, i.e. props.user is true, we include a link to ‘Add Review’
+which we will implement later. Next, let’s implement the listing of reviews   */}
                                 {props.user &&
                                     <Link to={"/movies/" + props.match.params.id + "/review"}>
                                         Add Review
