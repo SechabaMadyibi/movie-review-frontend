@@ -19,6 +19,9 @@ class MovieDataService {
         )
     }
     // The remaining four methods are for creating, updating and deleting a review and to get all ratings
+
+    //This then routes to ReviewsController in our backend and calls apiPostReview which then extracts data
+//from the request’s body parameter
     createReview(data) {
         return axios.post("http://localhost:5000/api/v1/movies/review", data)
     }
