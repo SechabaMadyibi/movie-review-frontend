@@ -14,7 +14,6 @@ import moment from 'moment'
 const Movie = props => {
     //We have a movie state variable to hold the specific movie we are currently showing in the Movie
     // component. We set its initial values to null, empty strings (“”) or an empty array   
-
     const [movie, setMovie] = useState({
         id: null,
         title: "",
@@ -82,6 +81,7 @@ the review user id */}
                                                         props.match.params.id +
                                                         "/review",
                                                     state: { currentReview: review }
+                                                
                                                 }}>Edit</Link>
                                                 </Col>
                                                 <Col><Button variant="link">Delete</Button></Col>

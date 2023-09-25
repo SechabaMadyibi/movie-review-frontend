@@ -7,8 +7,10 @@ import Button from 'react-bootstrap/Button';
 //The editing Boolean variable will be set to true if the component is in ‘Editing’ mode. False means we are
 //adding a review
 const AddReview = props => {
+    console.log(props)
     let editing = false
 
+    let initialReviewState = ""
     //We first check if a state is passed into AddReview. If you recall in movie.js, we pass in a state in the link to
     //edit    
     if (props.location.state && props.location.state.currentReview) {
@@ -18,7 +20,7 @@ const AddReview = props => {
 
     //We have a review state variable set to initialReviewState. In edit mode, initialReviewState
     //will be set to the existing review text  
-    let initialReviewState = ""
+    
     const [review, setReview] = useState(initialReviewState)
     // keeps track if review is submitted
     const [submitted, setSubmitted] = useState(false)
