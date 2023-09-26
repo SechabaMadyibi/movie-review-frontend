@@ -18,24 +18,48 @@ const MoviesList = props => {
     const [searchRating, setSearchRating] = useState("")
     const [ratings, setRatings] = useState(["All Ratings"])
 
+    const [currentPage, setCurrentPage] = useState(0)
+    const [entriesPerPage, setEntriesPerPage] = useState(0)
+     const [currentSearchMode, setCurrentSearchMode] = useState("")
+
     //  The useEffect hook is called after the component renders. So if we want to tell the component to perform
     // some code after rendering, we include it here
 
     // *Note that it is important that we specify an empty array in the second argument of useEffect. When we
     // do so, useEffect is called only once when the component first renders
-    useEffect(() => {
-        retrieveMovies()
+
+    useEffect(() =>{
         retrieveRatings()
-    }, [])
+        },[])
+
+    useEffect(() =>{
+        setCurrentPage(0)
+        },[currentSearchMode])
+
+    useEffect(() => {
+        retrieveNextPage() 
+    }, [currentPage])
+
+    const retrieveNextPage = () => {
+        if(currentSearchMode === "findByTitle")
+        findByTitle()
+        else if(currentSearchMode === "findByRating")
+        findByRating()
+        else
+        retrieveMovies()
+        }
 
     //getAll returns a promise with the movies retrieved from the database and we set it to the movies state
     // variable with setMovies(response.data.movies).
 
     const retrieveMovies = () => {
-        MovieDataService.getAll()
+        setCurrentSearchMode("")
+        MovieDataService.getAll(currentPage)
             .then(response => {
                 console.log(response.data)
-                setMovies(response.data.movies)
+                setMovies(response.data.movies) 
+                setCurrentPage(response.data.page)
+                setEntriesPerPage(response.data.entries_per_page)
             })
             .catch(e => {
                 console.log(e)
@@ -69,34 +93,35 @@ const MoviesList = props => {
     // The find function is supported by the findByTitle and findByRating methods. find simply provides the search
     // query value entered by the user and by which field to search (i.e. title or rated) to MovieDataService.find
     //find() in turn calls the backend API.
-    const find =(query, by) =>{
-        MovieDataService.find(query,by)
-        .then(response =>{
-        console.log(response.data)
-        setMovies(response.data.movies)
-        })
-        .catch(e =>{
-        console.log(e)
-        })
-        }
+    const find = (query, by) => {
+        MovieDataService.find(query, by, currentPage)
+            .then(response => {
+                console.log(response.data)
+                setMovies(response.data.movies)
+            })
+            .catch(e => {
+                console.log(e)
+            })
+    }
 
-// findByTitle is called by the ‘Search by title’s search button. It provides the title value to be searched 
-//  to find() and tells it to search by ‘title’.
+    // findByTitle is called by the ‘Search by title’s search button. It provides the title value to be searched 
+    //  to find() and tells it to search by ‘title’.
 
-        const findByTitle = () => {
+    const findByTitle = () => {
+        setCurrentSearchMode("findByTitle")
         find(searchTitle, "title")
-        }
-console.log(props)
-// findByRating is called by the ‘Search by rating’s search button. It provides the rating value to be searched
-// to find() and tells it to search by ‘rated’.
+    }
+    console.log(props)
+    // findByRating is called by the ‘Search by rating’s search button. It provides the rating value to be searched
+    // to find() and tells it to search by ‘rated’.
 
-        const findByRating = () => {
-        if(searchRating === "All Ratings"){
-        retrieveMovies()
+    const findByRating = () => {
+        setCurrentSearchMode("findByRating")
+        if (searchRating === "All Ratings") {
+            retrieveMovies()
         }
-        else{
-        find(searchRating, "rated")
-        
+        else {
+            find(searchRating, "rated")
         }
     }
 
@@ -162,6 +187,16 @@ console.log(props)
                         )
                     })}
                 </Row>
+                <br></br>
+                Showing page: {currentPage}.
+                <Button
+                    variant="link"
+                    onClick={() => { setCurrentPage(currentPage + 1) }}
+                >
+                    Get next {entriesPerPage} results
+                </Button>
+                
+                
             </Container>
         </div>
     );

@@ -38,7 +38,26 @@ const Movie = props => {
     useEffect(() => {
         getMovie(props.match.params.id)
     }, [props.match.params.id])
-console.log(props)
+    console.log(props)
+
+    // In the callback, we get the reviews array in the current state. We then provide the index of the review to
+    // be deleted to the splice method to remove that review. We then set the updated reviews array as the state.  
+    const deleteReview = (reviewId, index) => {
+        MovieDataService.deleteReview(reviewId, props.user.id)
+            .then(response => {
+                setMovie((currState) => {
+                    currState.reviews.splice(index, 1)
+                    return ({
+                        ...currState
+                    })
+                })
+            })
+
+            .catch(e => {
+                console.log(e)
+            })
+    }
+
     return (
         <div>
             <Container>
@@ -53,7 +72,7 @@ console.log(props)
                                 <Card.Text>
                                     {movie.plot}
                                 </Card.Text>
-  {/* In the Card component, if the user is logged in, i.e. props.user is true, we include a link to ‘Add Review’
+                                {/* In the Card component, if the user is logged in, i.e. props.user is true, we include a link to ‘Add Review’
 which we will implement later. Next, let’s implement the listing of reviews   */}
                                 {props.user &&
                                     <Link to={"/movies/" + props.match.params.id + "/review"}>
@@ -69,9 +88,9 @@ which we will implement later. Next, let’s implement the listing of reviews   
                                 <Media key={index}>
                                     <Media.Body>
                                         <h5>{review.name + " reviewed on "}
-                                        {moment(review.date).format("Do MMMM YYYY")}</h5>
+                                            {moment(review.date).format("Do MMMM YYYY")}</h5>
                                         <p>{review.review}</p>
-  {/* A user can only delete reviews they have posted. They can’t delete/edit other’s reviews. Thus, we first
+                                        {/* A user can only delete reviews they have posted. They can’t delete/edit other’s reviews. Thus, we first
 check to see if a user is logged in (props.user is true). And only if the logged in user id is the same as
 the review user id */}
                                         {props.user && props.user.id === review.user_id &&
@@ -81,10 +100,13 @@ the review user id */}
                                                         props.match.params.id +
                                                         "/review",
                                                     state: { currentReview: review }
-                                                
+
                                                 }}>Edit</Link>
                                                 </Col>
-                                                <Col><Button variant="link">Delete</Button></Col>
+                                                {/* In the delete button, we pass in the review id and the index we got from the movie.reviews.map function
+into deleteReview */}
+                                                <Col><Button variant="link" onClick={() => deleteReview(review._id, index)}>
+                                                    Delete</Button></Col>
                                             </Row>
                                         }
                                     </Media.Body>
