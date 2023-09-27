@@ -31,7 +31,9 @@ const MoviesList = props => {
     useEffect(() =>{
         retrieveRatings()
         },[])
-
+        
+//We add a useEffect that whenever currentSearchMode changes, reset the currentPage to zero since it’s a new
+//search.
     useEffect(() =>{
         setCurrentPage(0)
         },[currentSearchMode])

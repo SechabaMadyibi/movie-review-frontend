@@ -41,7 +41,8 @@ const Movie = props => {
     console.log(props)
 
     // In the callback, we get the reviews array in the current state. We then provide the index of the review to
-    // be deleted to the splice method to remove that review. We then set the updated reviews array as the state.  
+    // be deleted to the splice method to remove that review. We then set the updated reviews array as the state.
+      
     const deleteReview = (reviewId, index) => {
         MovieDataService.deleteReview(reviewId, props.user.id)
             .then(response => {
@@ -103,7 +104,7 @@ the review user id */}
 
                                                 }}>Edit</Link>
                                                 </Col>
-                                                {/* In the delete button, we pass in the review id and the index we got from the movie.reviews.map function
+{/* In the delete button, we pass in the review id and the index we got from the movie.reviews.map function
 into deleteReview */}
                                                 <Col><Button variant="link" onClick={() => deleteReview(review._id, index)}>
                                                     Delete</Button></Col>
