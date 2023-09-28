@@ -20,7 +20,7 @@ const MoviesList = props => {
 
     const [currentPage, setCurrentPage] = useState(0)
     const [entriesPerPage, setEntriesPerPage] = useState(0)
-     const [currentSearchMode, setCurrentSearchMode] = useState("")
+    const [currentSearchMode, setCurrentSearchMode] = useState("")
 
     //  The useEffect hook is called after the component renders. So if we want to tell the component to perform
     // some code after rendering, we include it here
@@ -31,7 +31,7 @@ const MoviesList = props => {
     useEffect(() =>{
         retrieveRatings()
         },[])
-        
+
 //We add a useEffect that whenever currentSearchMode changes, reset the currentPage to zero since it’s a new
 //search.
     useEffect(() =>{
